@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1463627580 source:e:\tp_3\tp_3_cascara\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+
+1463627274 e:\tp_3\tp_3_cascara\funciones.h
+	"input.h"
+
+1463627556 source:e:\tp_3\tp_3_cascara\main.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+
+1463507056 source:e:\tp_3\tp_3_cascara\input.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"input.h"
+
+1463332264 e:\tp_3\tp_3_cascara\input.h
+
