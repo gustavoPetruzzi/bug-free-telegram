@@ -7,9 +7,10 @@ int main()
     char seguir='s';
     int opcion=0;
     int auxInt;
-    EMovie peliculas[50];
     int i;
-    auxInt = initArrayEstructuras(peliculas, QTY);
+    EMovie peliculas[QTY];
+
+    auxInt = cargarArchivo(peliculas, QTY);
 
     if(auxInt == 0)
     {
@@ -17,8 +18,9 @@ int main()
         {
             printf("1- Agregar pelicula\n");
             printf("2- Borrar pelicula\n");
-            printf("3- Generar pagina web\n");
-            printf("4- Salir\n");
+            printf("3- Modificar pelicula\n");
+            printf("4- Generar pagina web\n");
+            printf("5- Salir\n");
 
             scanf("%d",&opcion);
 
@@ -45,10 +47,27 @@ int main()
                     }
                     break;
                 case 2:
+                    auxInt = borrarPelicula(peliculas, QTY);
+                    if(auxInt !=0)
+                    {
+                        printf("Error");
+                    }
                     break;
                 case 3:
+                    auxInt = modificarPelicula(peliculas, QTY);
+                    if(auxInt !=0)
+                    {
+                        printf("Error");
+                    }
                    break;
                 case 4:
+                    break;
+                case 5:
+                    auxInt = guardarEnArchivo(peliculas, QTY);
+                    if(auxInt == 0)
+                    {
+                        printf("Archivo guardado");
+                    }
                     seguir = 'n';
                     break;
             }

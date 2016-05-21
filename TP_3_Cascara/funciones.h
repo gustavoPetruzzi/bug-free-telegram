@@ -14,7 +14,14 @@ typedef struct{
 int initArrayEstructuras(EMovie* pMovie, int length);
 int buscarLibre(EMovie* pMovie, int length);
 int buscarPorNombre(EMovie* pMovie, int length);
+int cargarArchivo(EMovie *pMovie, int length);
+int guardarEnArchivo(EMovie * pMovie, int length);
+
+
 int pedirDatos(EMovie* pMovie, int length, char* titulo, char* genero, int* duracion, char* descripcion, int* puntaje, char* linkImagen);
+EMovie cargarDatos(char* titulo, char* genero, int* duracion, char* descripcion, int* puntaje, char* linkImagen);
+int modificarPelicula(EMovie* pMovie, int length);
+int agregarPelicula(EMovie *pMovie, int length);
 /**
  *  Agrega una pelicula al archivo binario
  *  @param movie la estructura a ser agregada al archivo
@@ -27,7 +34,7 @@ int agregarPelicula(EMovie* pMovie, int length);
  *  @param movie la estructura a ser eliminada al archivo
  *  @return retorna 1 o 0 de acuerdo a si pudo eliminar la pelicula o no
  */
-int borrarPelicula(EMovie movie);
+int borrarPelicula(EMovie* pMovie, int length);
 
 /**
  *  Genera un archivo html a partir de las peliculas cargadas en el archivo binario.

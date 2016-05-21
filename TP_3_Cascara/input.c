@@ -260,3 +260,21 @@ int getStringSpace(char* input,char message[],char eMessage[], int lowLimit, int
     printf("%s", eMessage);
     return -1;
 }
+int siOno(char* input, char message[], char eMessage[], char lowLimit, char hiLimit)
+{
+    char auxChar;
+    int resp;
+    printf("%s", message);
+    fflush(stdin);
+    resp = scanf("%c", &auxChar);
+    if(resp == 1)
+    {
+        if(auxChar == lowLimit || auxChar ==hiLimit)
+        {
+            *input = auxChar;
+            return 0;
+        }
+    }
+    printf("%s", eMessage);
+    return -1;
+}

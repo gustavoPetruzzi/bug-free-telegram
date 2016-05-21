@@ -22,3 +22,26 @@
 
 1463332264 e:\tp_3\tp_3_cascara\input.h
 
+1463828601 source:c:\users\gustavo\desktop\bug-free-telegram-master\tp_3_cascara\input.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"input.h"
+
+1463828302 c:\users\gustavo\desktop\bug-free-telegram-master\tp_3_cascara\input.h
+
+1463829480 source:c:\users\gustavo\desktop\bug-free-telegram-master\tp_3_cascara\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+
+1463829221 c:\users\gustavo\desktop\bug-free-telegram-master\tp_3_cascara\funciones.h
+	"input.h"
+
+1463829577 source:c:\users\gustavo\desktop\bug-free-telegram-master\tp_3_cascara\main.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+

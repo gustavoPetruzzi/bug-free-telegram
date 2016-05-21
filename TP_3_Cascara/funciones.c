@@ -17,6 +17,62 @@ int initArrayEstructuras(EMovie* pMovie, int length)
     return retorno;
 }
 
+
+int cargarArchivo(EMovie *pMovie, int length)
+{
+
+	int flag = 0;
+	FILE *pArch;
+
+	if(pMovie != NULL && length>0)
+    {
+
+        pArch=fopen("binMovie.dat", "rb");
+        if(pArch==NULL)
+        {
+            pArch= fopen("binMovie.dat", "wb");
+
+            flag = initArrayEstructuras(pMovie, length);
+
+            if(flag == -1)
+            {
+                return 1;
+            }
+            if(pArch==NULL)
+            {
+                return 1;
+            }
+        }
+        if(flag ==0)
+        {
+            fread(pMovie,sizeof(EMovie),length,pArch);
+
+        }
+    }
+	fclose(pArch);
+	return 0;
+}
+
+int guardarEnArchivo(EMovie * pMovie, int length)
+{
+    if(pMovie != NULL && length> 0)
+    {
+        FILE *pArch;
+
+            pArch=fopen("binMovie.dat","wb");
+            if(pArch == NULL)
+            {
+                return 1;
+            }
+
+        fwrite(pMovie,sizeof(EMovie),length,pArch);
+
+        fclose(pArch);
+    }
+
+	return 0;
+}
+
 int buscarLibre(EMovie* pMovie, int length)
 {
     int i;
@@ -117,11 +173,25 @@ int pedirDatos(EMovie* pMovie, int length, char* titulo, char* genero, int* dura
 
         do
         {
-            auxInt = getInt(&auxPuntaje, "Ingrese el link de la imagen: ", "Error: Maximo 50 caracteres", 0, 10);
+            auxInt = getInt(&auxPuntaje, "Ingrese el puntaje: ", "Error: puntaje valido del 1 al 10", 0, 11);
         }while(auxInt!=0);
         *puntaje = auxPuntaje;
     }
     return retorno;
+}
+EMovie cargarDatos(char* titulo, char* genero, int* duracion, char* descripcion, int* puntaje, char* linkImagen)
+{
+    EMovie auxPelicula;
+
+    strcpy(auxPelicula.titulo, titulo);
+    strcpy(auxPelicula.genero, genero);
+    auxPelicula.duracion = *duracion;
+    strcpy(auxPelicula.descripcion, descripcion);
+    auxPelicula.puntaje = *puntaje;
+    strcpy(auxPelicula.linkImagen, linkImagen);
+    auxPelicula.isEmpty = 0;
+
+    return auxPelicula;
 }
 int agregarPelicula(EMovie *pMovie, int length)
 {
@@ -144,20 +214,99 @@ int agregarPelicula(EMovie *pMovie, int length)
             auxInt = pedirDatos(pMovie, length, titulo, genero, &duracion, descripcion, &puntaje, linkImagen);
             if(auxInt == 0)
             {
-
-                strcpy((pMovie-indice)->titulo, titulo);
-                strcpy((pMovie+indice)->genero, genero);
-                (pMovie+indice)->duracion = duracion;
-                (pMovie+indice)->puntaje = puntaje;
-                strcpy((pMovie+indice)->descripcion, descripcion);
-                strcpy((pMovie+indice)->linkImagen, linkImagen);
-                (pMovie+indice)->isEmpty = 0;
+                *(pMovie+indice) = cargarDatos(titulo, genero, &duracion, descripcion, &puntaje, linkImagen);
             }
+            else
+            {
+                printf("No se ha podido cargar la pelicula");
+            }
+        }
+        else
+        {
+            printf("No hay mas lugar para cargar peliculas");
         }
     }
     return retorno;
 }
 
-int borrarPelicula(EMovie* pmovie)
+int borrarPelicula(EMovie* pMovie, int length)
+{
+    char auxChar;
+    int indice;
+    int auxInt;
+    int retorno = -1;
+    if(pMovie != NULL && length>0)
+    {
+        retorno = 0;
+        indice = buscarPorNombre(pMovie, length);
+        if(indice != -1)
+        {
+            do
+            {
+                auxInt = siOno(&auxChar, "Desea borrar? s/n", "error: Ingrese 's' para borrar o 'n' para cancelar", 's', 'n');
+            }while(auxInt !=0);
+            if(auxChar == 's')
+            {
+                (pMovie+indice)->isEmpty = 1;
+                printf("Pelicula borrada\n");
+            }
+            else
+            {
+                printf("Accion cancelada\n");
+            }
+        }
+        else
+        {
+            printf("No existe ninguna pelicula con ese nombre");
+        }
+    }
+    return retorno;
+}
+
+int modificarPelicula(EMovie* pMovie, int length)
+{
+    int retorno = -1;
+    int indice;
+    char titulo[20];
+    char genero[20];
+    int duracion;
+    char descripcion[50];
+    int puntaje;
+    char linkImagen[50];
+    int auxInt;
+    char auxChar;
+
+    if(pMovie !=NULL && length> 0)
+    {
+        retorno = 0;
+        indice = buscarPorNombre(pMovie, length);
+        if(indice != -1)
+        {
+            do
+            {
+                auxInt = siOno(&auxChar, "Desea modificar? s/n", "error: Ingrese 's' para borrar o 'n' para cancelar", 's', 'n');
+            }while(auxInt !=0);
+            if(auxChar == 's')
+            {
+                auxInt = pedirDatos(pMovie, length, titulo, genero, &duracion, descripcion, &puntaje, linkImagen);
+                if(auxInt == 0)
+                {
+                    *(pMovie+indice) = cargarDatos(titulo, genero, &duracion, descripcion, &puntaje, linkImagen);
+                    printf("Pelicula modificada\n");
+                }
+            }
+            else
+            {
+                printf("Accion cancelada\n");
+            }
+        }
+        else
+        {
+            printf("No existe ninguna pelicula con ese nombre");
+        }
+    }
+    return retorno;
+}
+
 
 
